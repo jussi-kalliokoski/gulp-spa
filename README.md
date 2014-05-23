@@ -85,7 +85,8 @@ gulp.task("build", function () {
                         .pipe(rev());
                 }
             }
-        })));
+        })))
+        .pipe(gulp.dest("./public/"));
 });
 ```
 
@@ -133,7 +134,8 @@ gulp.task("build", function () {
                     return stylus();
                 }
             }
-        })));
+        })))
+        .pipe(gulp.dest("./public/"));
 });
 ```
 
