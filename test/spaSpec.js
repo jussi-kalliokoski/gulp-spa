@@ -131,4 +131,18 @@ describe("spa", function () {
             });
         }
     }));
+
+    var id;
+
+    before(function () {
+        id = 0;
+    });
+
+    it("should allow multiple builds in different files through the same pipeline",
+        basicCase("html-multiple-builds-in-different-files-with-same-pipeline", {
+            js: function () {
+                id += 1;
+                return concat("joined" + id + ".js");
+            }
+    }));
 });
