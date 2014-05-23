@@ -123,4 +123,12 @@ describe("spa", function () {
             return actual.should.produce.sameFilesAs(expected);
         });
     });
+
+    it("should allow multiple builds through the same pipeline", basicCase("html-multiple-builds-with-same-pipeline", {
+        js: function () {
+            return rename(function (file) {
+                // do nothing, dummy pipeline
+            });
+        }
+    }));
 });
