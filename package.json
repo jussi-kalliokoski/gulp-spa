@@ -6,6 +6,10 @@
   "directories": {
     "test": "tests"
   },
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "dependencies": {
     "gulp": ">=3.6.2",
     "lodash": "^2.4.1",
