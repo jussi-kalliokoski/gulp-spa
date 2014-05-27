@@ -122,6 +122,21 @@ describe("spa", function () {
             var actual = gulp.src("./test/fixtures/html-ignore-null-files/*").pipe(stream);
             return actual.should.produce.sameFilesAs(expected);
         });
+
+        it("should let the source be defined in the gulpfile if build has no sources", function () {
+            var expected = gulp.src("./test/expected/html-source-defined-in-gulpfile/*");
+            var actual = gulp.src("./test/fixtures/html-source-defined-in-gulpfile/*.html")
+                .pipe(spa.html({
+                    assetsDir: "./test/fixtures/html-source-defined-in-gulpfile/",
+                    pipelines: {
+                        js: function () {
+                            return gulp.src(["file1.js", "file2.js"], { cwd: "./test/fixtures/html-source-defined-in-gulpfile/" })
+                                .pipe(concat("joined.js"));
+                        }
+                    }
+                }));
+            actual.should.produce.sameFilesAs(expected);
+        });
     });
 
     it("should allow multiple builds through the same pipeline", basicCase("html-multiple-builds-with-same-pipeline", {
