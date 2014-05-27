@@ -137,6 +137,21 @@ describe("spa", function () {
                 }));
             actual.should.produce.sameFilesAs(expected);
         });
+
+        it("should allow overriding options for a build in the declaration", function () {
+            var expected = gulp.src("./test/expected/html-override-build-options/*");
+            var actual = gulp.src("./test/fixtures/html-override-build-options/*.html")
+                .pipe(spa.html({
+                    assetsDir: "./test/fixtures/html-override-build-options/",
+                    pipelines: {
+                        js: function () {
+                            return gulp.src(["file1.js", "file2.js"], { cwd: "./test/fixtures/html-override-build-options/" })
+                                .pipe(concat("joined.js"));
+                        }
+                    }
+                }));
+            actual.should.produce.sameFilesAs(expected);
+        });
     });
 
     it("should allow multiple builds through the same pipeline", basicCase("html-multiple-builds-with-same-pipeline", {
