@@ -24,7 +24,7 @@ var spa = require("gulp-spa");
 This will give you an interface with a method `html` that takes the following options as its first argument:
 
 * `assetsDir` (defaults to `./`) This is where gulp-spa will look for the assets your HTML file refers to.
-* `pipelines` (defaults to `{}`) A key-value mapping of pipeline names and functions that return the streams the files in that pipeline should go to.
+* `pipelines` (defaults to `{}`) A key-value mapping of pipeline names and functions that return the streams the files in that pipeline should go to. The first argument of the function is a stream of the source files.
 
 ### Defining builds
 
@@ -68,19 +68,21 @@ gulp.task("build", function () {
         .pipe(spa.html({
             assetsDir: "./path/to/",
             pipelines: {
-                main: function () {
+                main: function (files) {
                     // this gets applied for the HTML file itself
-                    return htmlmin();
+                    return files.pipe(htmlmin());
                 },
 
-                js: function () {
-                    return uglify()
+                js: function (files) {
+                    return files
+                        .pipe(uglify())
                         .pipe(concat("app.js"))
                         .pipe(rev());
                 },
 
-                css: function () {
-                    return minifyCss()
+                css: function (files) {
+                    return files
+                        .pipe(minifyCss())
                         .pipe(concat("app.css")
                         .pipe(rev());
                 }
@@ -126,12 +128,14 @@ gulp.task("build", function () {
         .pipe(spa.html({
             assetsDir: "./path/to/",
             pipelines: {
-                js: function () {
-                    return coffee();
+                js: function (files) {
+                    return files
+                        .pipe(coffee());
                 },
 
-                css: function () {
-                    return stylus();
+                css: function (files) {
+                    return files
+                        .pipe(stylus());
                 }
             }
         })))
