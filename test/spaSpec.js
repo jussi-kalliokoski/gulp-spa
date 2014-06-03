@@ -43,8 +43,8 @@ describe("spa", function () {
                 var type = tagType.type;
                 var tagName = tagType.tagName;
                 var createConcat = function () {
-                    return function () {
-                        return concat("joined." + type);
+                    return function (files) {
+                        return files.pipe(concat("joined." + type));
                     };
                 };
 
@@ -72,17 +72,17 @@ describe("spa", function () {
         });
 
         it("should use the pipeline titled `main` for the main file", basicCase("html-use-pipeline-named-main", {
-            main: function () {
-                return rename("foo.html");
+            main: function (files) {
+                return files.pipe(rename("foo.html"));
             }
         }));
 
         it("should work with multiple html files", basicCase("html-multiple-builds", {
-            js: function () {
-                return concat("joined.js");
+            js: function (files) {
+                return files.pipe(concat("joined.js"));
             },
-            css: function () {
-                return concat("joined.css");
+            css: function (files) {
+                return files.pipe(concat("joined.css"));
             }
         }));
 
@@ -155,10 +155,10 @@ describe("spa", function () {
     });
 
     it("should allow multiple builds through the same pipeline", basicCase("html-multiple-builds-with-same-pipeline", {
-        js: function () {
-            return rename(function (file) {
+        js: function (files) {
+            return files.pipe(rename(function (file) {
                 // do nothing, dummy pipeline
-            });
+            }));
         }
     }));
 
@@ -170,9 +170,9 @@ describe("spa", function () {
 
     it("should allow multiple builds in different files through the same pipeline",
         basicCase("html-multiple-builds-in-different-files-with-same-pipeline", {
-            js: function () {
+            js: function (files) {
                 id += 1;
-                return concat("joined" + id + ".js");
+                return files.pipe(concat("joined" + id + ".js"));
             }
     }));
 });
