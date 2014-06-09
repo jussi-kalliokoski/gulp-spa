@@ -105,7 +105,7 @@ You will end up with your files minified, revved and whatnot, and something like
 </html>
 ```
 
-Because gulp-spa uses gulp itself for finding the files and streams for processing, it even gives you flexibility to go crazy like this:
+Because gulp-spa uses [vinyl-fs](https://github.com/wearefractal/vinyl-fs) (the same module that provides `gulp.src` and `gulp.dest`) itself for finding the files, and streams for processing, it even gives you the flexibility to go crazy like this:
 
 ```html
 <html>
