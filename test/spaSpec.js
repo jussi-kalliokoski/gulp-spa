@@ -135,12 +135,14 @@ describe("spa", function () {
                         }
                     }
                 }));
-            actual.should.produce.sameFilesAs(expected);
+            return actual.should.produce.sameFilesAs(expected);
         });
 
-        it("should allow overriding options for a build in the declaration", function () {
-            var expected = gulp.src("./test/expected/html-override-build-options/*");
-            var actual = gulp.src("./test/fixtures/html-override-build-options/*.html")
+        it("should allow overriding options for a build in the declaration", basicCase("expected/html-override-build-options", {}));
+
+        it("should allow overriding options for a build in the declaration (sources in gulp file)", function () {
+            var expected = gulp.src("./test/expected/html-override-build-options-source-defined-in-gulpfile/*");
+            var actual = gulp.src("./test/fixtures/html-override-build-options-source-defined-in-gulpfile/*.html")
                 .pipe(spa.html({
                     assetsDir: "./test/fixtures/html-override-build-options/",
                     pipelines: {
@@ -150,7 +152,7 @@ describe("spa", function () {
                         }
                     }
                 }));
-            actual.should.produce.sameFilesAs(expected);
+            return actual.should.produce.sameFilesAs(expected);
         });
     });
 
