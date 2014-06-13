@@ -3,6 +3,7 @@
 var gulp = require("gulp");
 var concat = require("gulp-concat");
 var rename = require("gulp-rename");
+var exclude = require("gulp-ignore").exclude;
 var gutil = require("gulp-util");
 var File = require("vinyl");
 var through = require("through2");
@@ -12,7 +13,10 @@ var spa = require("../index.js");
 describe("spa", function () {
     var basicCase = function (name, pipelines) {
         return function () {
-            var expected = gulp.src("./test/expected/" + name + "/**/*");
+            var expected = gulp.src("./test/expected/" + name + "/**/*")
+                .pipe(exclude(function isNull (file) {
+                    return file.isNull();
+                }));
             var actual = gulp.src("./test/fixtures/" + name + "/*.html")
                 .pipe(spa.html({
                     assetsDir: "./test/fixtures/" + name,
@@ -89,6 +93,12 @@ describe("spa", function () {
         it("should not insert files that aren't CSS or JS", basicCase("html-dont-insert-unknown", {}));
 
         it("should work with html files without any builds", basicCase("html-no-builds", {}));
+
+        it("should work when css files are moved to another directory", basicCase("html-link-tags-moved-to-directory", {
+            css: function (files) {
+                return files.pipe(rename({ dirname: "css" }));
+            }
+        }));
 
         it("should throw an error if streaming is attempted", function () {
             var stream = spa.html();

@@ -18,15 +18,16 @@
     "vinyl-fs": "^0.2.1"
   },
   "devDependencies": {
-    "gulp": "^3.6.2",
-    "coveralls": "^2.10.0",
-    "gulp-concat": "^2.2.0",
     "chai": "^1.9.1",
     "chai-gulp-helpers": "0.0.2",
+    "coveralls": "^2.10.0",
+    "gulp": "^3.6.2",
+    "gulp-concat": "^2.2.0",
+    "gulp-ignore": "^1.1.0",
     "gulp-istanbul": "^0.2.0",
     "gulp-mocha": "^0.4.1",
-    "vinyl": "^0.2.3",
-    "gulp-rename": "^1.2.0"
+    "gulp-rename": "^1.2.0",
+    "vinyl": "^0.2.3"
   },
   "scripts": {
     "coveralls": "cat ./coverage/lcov.info | COVERALLS_SERVICE_NAME=\"travis-ci\" ./node_modules/.bin/coveralls",
